@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VocalyzeAI - Advanced Vocal Analysis System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                🎤 VocalyzeAI
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><button id="auth-btn" class="auth-btn">Sign In</button></li>
+                <li>
+                    <select id="language-select" class="language-select">
+                        <option value="en">English</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 id="hero-title">Analyze Your Singing with AI</h1>
+            <p id="hero-subtitle">Get instant feedback on your pitch, tone, and vocal performance — in seconds.</p>
+            <div class="hero-buttons">
+                <button id="start-btn" class="btn btn-primary">Start Analysis</button>
+                <button id="demo-btn" class="btn btn-secondary">Try Demo</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <h2 id="how-title">How It Works</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3 id="step1-title">Upload Your Voice</h3>
+                <p id="step1-desc">Record or upload your audio file in MP3/WAV format</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3 id="step2-title">AI Analyzes Performance</h3>
+                <p id="step2-desc">Our AI analyzes pitch, tone, stability, and more</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3 id="step3-title">Get Instant Feedback</h3>
+                <p id="step3-desc">Receive personalized recommendations to improve</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App -->
+    <section id="app-section" class="app-section">
+        <div class="container">
+            <!-- Upload Area -->
+            <div id="upload-area" class="upload-area" style="display: none;">
+                <div class="upload-box">
+                    <h2 id="upload-title">Upload Your Audio</h2>
+                    <div class="drag-drop-area" id="drag-drop-area">
+                        <p id="drag-desc">Drag and drop your audio file here or click to select</p>
+                        <input type="file" id="audio-input" accept=".mp3,.wav,.m4a" style="display: none;">
+                    </div>
+                    <p id="file-size-warning" class="warning" style="display: none;">File size must be ≤ 10MB</p>
+                    
+                    <!-- Recording Option -->
+                    <div class="recording-section">
+                        <h3 id="rec-title">Or Record Now</h3>
+                        <div class="button-group">
+                            <button id="record-btn" class="btn btn-secondary">🎤 Start Recording</button>
+                            <button id="stop-record-btn" class="btn btn-danger" style="display: none;">⏹ Stop Recording</button>
+                        </div>
+                        <div id="recording-indicator" style="display: none;" class="recording-indicator">
+                            <span class="pulse"></span>
+                            <span id="recording-text">Recording...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Results -->
+            <div id="results-area" class="results-area" style="display: none;">
+                <h2 id="results-title">Your Vocal Report</h2>
+                
+                <div class="metrics-container">
+                    <div class="metric">
+                        <h3 id="pitch-label">Pitch Accuracy</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="pitch-progress" style="width: 0%"></div>
+                        </div>
+                        <p id="pitch-value" class="metric-value">0%</p>
+                    </div>
+                    
+                    <div class="metric">
+                        <h3 id="stability-label">Vocal Stability</h3>
+                        <div class="stability-level">
+                            <span id="stability-value">--</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <h3 id="tone-label">Tone Quality</h3>
+                        <div class="tone-level">
+                            <span id="tone-value">--</span>
+                        </div>
+                    </div>
+
+                    <div class="metric">
+                        <h3 id="resonance-label">Resonance</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="resonance-progress" style="width: 0%"></div>
+                        </div>
+                        <p id="resonance-value" class="metric-value">0%</p>
+                    </div>
+                </div>
+
+                <!-- Overall Score -->
+                <div class="overall-score">
+                    <h3 id="overall-label">Overall Score</h3>
+                    <div class="score-display">
+                        <span id="overall-score" class="score-number">0</span>
+                        <span class="score-max">/ 100</span>
+                    </div>
+                    <p id="score-level" class="score-level">Beginner</p>
+                </div>
+
+                <!-- AI Feedback -->
+                <div class="ai-feedback">
+                    <h3 id="feedback-title">AI Feedback</h3>
+                    <p id="feedback-text">Analyzing your vocal performance...</p>
+                </div>
+
+                <!-- Suggestions -->
+                <div class="suggestions">
+                    <h3 id="suggestions-title">Improvement Tips</h3>
+                    <ul id="suggestions-list">
+                        <li id="suggestion1">Focus on breathing technique</li>
+                        <li id="suggestion2">Practice pitch exercises</li>
+                        <li id="suggestion3">Work on vocal projection</li>
+                    </ul>
+                </div>
+
+                <!-- Share & Download -->
+                <div class="action-buttons">
+                    <button id="share-btn" class="btn btn-secondary">📤 Share Results</button>
+                    <button id="download-btn" class="btn btn-secondary">⬇️ Download Report</button>
+                    <button id="try-again-btn" class="btn btn-primary">🎤 Try Again</button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-area" class="loading-area" style="display: none;">
+                <div class="spinner"></div>
+                <p id="loading-text">Analyzing your vocal performance...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why-us" class="why-us">
+        <h2 id="why-title">Why VocalyzeAI?</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <h3 id="feature1-title">Instant AI Feedback</h3>
+                <p id="feature1-desc">Get real-time analysis of your vocal performance</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🎤</span>
+                <h3 id="feature2-title">No Vocal Coach Needed</h3>
+                <p id="feature2-desc">Affordable access to professional vocal guidance</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📊</span>
+                <h3 id="feature3-title">Data-Driven Insights</h3>
+                <p id="feature3-desc">Track your progress with detailed analytics</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">⚡</span>
+                <h3 id="feature4-title">Fast and Easy to Use</h3>
+                <p id="feature4-desc">3 simple steps to improve your singing</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2 id="pricing-title">Pricing Plans</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 id="free-plan">Free</h3>
+                <p class="price">$0<span>/month</span></p>
+                <ul id="free-features">
+                    <li>✓ 1 analysis per day</li>
+                    <li>✓ Basic feedback</li>
+                    <li>✓ Pitch accuracy</li>
+                </ul>
+                <button class="btn btn-secondary">Get Started</button>
+            </div>
+            <div class="pricing-card featured">
+                <h3 id="pro-plan">Pro</h3>
+                <p class="price">$9.99<span>/month</span></p>
+                <ul id="pro-features">
+                    <li>✓ Unlimited analyses</li>
+                    <li>✓ Detailed feedback</li>
+                    <li>✓ All metrics</li>
+                    <li>✓ History tracking</li>
+                    <li>✓ Custom goals</li>
+                </ul>
+                <button class="btn btn-primary">Start Free Trial</button>
+            </div>
+            <div class="pricing-card">
+                <h3 id="pro-plus-plan">Pro Plus</h3>
+                <p class="price">$19.99<span>/month</span></p>
+                <ul id="pro-plus-features">
+                    <li>✓ Everything in Pro</li>
+                    <li>✓ AI coaching sessions</li>
+                    <li>✓ Video tutorials</li>
+                    <li>✓ Priority support</li>
+                </ul>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2 id="cta-title">Ready to Improve Your Voice?</h2>
+        <p id="cta-subtitle">Join thousands of singers already using VocalyzeAI</p>
+        <button id="cta-btn" class="btn btn-primary btn-large">Try It Now</button>
+        <p id="tagline" class="tagline">Powered by AI-driven vocal analysis technology</p>
+    </section>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <div id="login-form" class="auth-form">
+                <h2 id="login-title">Sign In</h2>
+                <div class="form-group">
+                    <input type="email" id="login-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="Password" required>
+                </div>
+                <button id="login-submit" class="btn btn-primary btn-full">Sign In</button>
+                <div class="auth-links">
+                    <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                <p id="signup-link">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+            </div>
+
+            <div id="signup-form" class="auth-form" style="display: none;">
+                <h2 id="signup-title">Sign Up</h2>
+                <div class="form-group">
+                    <input type="text" id="signup-name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                </div>
+                <button id="signup-submit" class="btn btn-primary btn-full">Sign Up</button>
+                <p id="login-link">Already have an account? <a href="#" id="show-login">Sign in</a></p>
+            </div>
+
+            <div id="user-profile" class="auth-form" style="display: none;">
+                <h2 id="profile-title">Profile</h2>
+                <p id="user-email-display">Email: <strong></strong></p>
+                <p id="user-analyses">Total Analyses: <strong>0</strong></p>
+                <div class="button-group">
+                    <button id="profile-dashboard-btn" class="btn btn-primary">Dashboard</button>
+                    <button id="profile-analysis-btn" class="btn btn-secondary">New Analysis</button>
+                    <button id="history-btn" class="btn btn-secondary">View History</button>
+                    <button id="logout-btn" class="btn btn-danger">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="modal" style="display: none;">
+        <div class="modal-content modal-lg">
+            <span class="close-modal">&times;</span>
+            <h2 id="history-title">Analysis History</h2>
+            <div id="history-list" class="history-list">
+                <!-- History items will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="forgot-password-form" class="auth-form">
+                <h2 id="forgot-title">Reset Password</h2>
+                <p id="forgot-desc">Enter your email address and we'll send you a link to reset your password.</p>
+                <div class="form-group">
+                    <input type="email" id="forgot-email" placeholder="Email" required>
+                </div>
+                <button id="forgot-submit" class="btn btn-primary btn-full">Send Reset Link</button>
+                <p id="back-to-login">Remember your password? <a href="#" id="back-to-login-link">Sign in</a></p>
+            </div>
+
+            <div id="reset-success" class="auth-form" style="display: none;">
+                <h2 id="reset-success-title">Check Your Email</h2>
+                <p id="reset-success-desc">We've sent a password reset link to your email address. Please check your inbox and follow the instructions.</p>
+                <button id="back-to-login-success" class="btn btn-primary btn-full">Back to Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <section id="dashboard-section" class="dashboard-section" style="display: none;">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 id="dashboard-title">Welcome back, <span id="user-name-display"></span>!</h1>
+                <p id="dashboard-subtitle">Here's your vocal analysis overview</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <h3 id="total-analyses">0</h3>
+                        <p id="total-analyses-label">Total Analyses</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <h3 id="avg-score">0</h3>
+                        <p id="avg-score-label">Average Score</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <h3 id="best-score">0</h3>
+                        <p id="best-score-label">Best Score</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-content">
+                        <h3 id="last-analysis">--</h3>
+                        <p id="last-analysis-label">Last Analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2 id="quick-actions-title">Quick Actions</h2>
+                <div class="action-buttons">
+                    <button id="dashboard-start-analysis" class="btn btn-primary">🎤 Start New Analysis</button>
+                    <button id="dashboard-view-history" class="btn btn-secondary">📋 View History</button>
+                    <button id="dashboard-settings" class="btn btn-secondary">⚙️ Settings</button>
+                </div>
+            </div>
+
+            <!-- Recent Analyses -->
+            <div class="recent-analyses">
+                <h2 id="recent-title">Recent Analyses</h2>
+                <div id="recent-analyses-list" class="recent-list">
+                    <!-- Recent analyses will be populated here -->
+                    <div class="no-analyses" id="no-analyses">
+                        <p id="no-analyses-text">No analyses yet. Start your first vocal analysis!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Chart Placeholder -->
+            <div class="progress-chart">
+                <h2 id="progress-title">Your Progress</h2>
+                <div class="chart-placeholder">
+                    <p id="chart-placeholder-text">Complete more analyses to see your progress chart</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 VocalyzeAI. All rights reserved.</p>
+    </footer>
+
+    <script src="languages.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
