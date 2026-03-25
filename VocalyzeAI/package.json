@@ -1,0 +1,37 @@
+{
+  "name": "vocalyzeai-frontend",
+  "version": "1.0.0",
+  "description": "Advanced Vocal Analysis System - Frontend",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8000 -c-1",
+    "dev": "http-server -p 8000",
+    "build": "echo 'No build step required for vanilla JS'",
+    "test": "echo 'Run your tests here'",
+    "serve": "python -m http.server 8000"
+  },
+  "keywords": [
+    "vocal",
+    "analysis",
+    "ai",
+    "singing",
+    "audio",
+    "music"
+  ],
+  "author": "VocalyzeAI Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/vocalyzeai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/vocalyzeai/issues"
+  },
+  "homepage": "https://vocalyzeai.com"
+}

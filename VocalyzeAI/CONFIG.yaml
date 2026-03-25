@@ -1,0 +1,120 @@
+# VocalyzeAI Project Configuration
+
+## Frontend Configuration
+FRONTEND_PORT=8000
+FRONTEND_HOST=localhost
+
+## Backend Configuration
+BACKEND_PORT=5000
+BACKEND_HOST=0.0.0.0
+API_BASE_URL=http://localhost:5000/api
+
+## Database
+DB_TYPE=sqlite
+DB_NAME=vocalyzeai.db
+DB_PATH=backend/vocalyzeai.db
+
+## Authentication
+JWT_SECRET=your-secret-key
+JWT_EXPIRATION_DAYS=30
+PASSWORD_MIN_LENGTH=8
+
+## File Upload
+MAX_FILE_SIZE_MB=10
+ALLOWED_FORMATS=mp3,wav,m4a
+UPLOAD_FOLDER=backend/uploads
+
+## Audio Analysis
+MIN_AUDIO_DURATION=3  # seconds
+MAX_AUDIO_DURATION=300  # 5 minutes
+SAMPLE_RATE=44100  # Hz
+FFT_SIZE=2048
+
+## Analysis Thresholds
+PITCH_GOOD_THRESHOLD=75
+PITCH_FAIR_THRESHOLD=60
+STABILITY_HIGH_THRESHOLD=0.7
+STABILITY_MEDIUM_THRESHOLD=0.4
+TONE_EXCELLENT_THRESHOLD=0.75
+TONE_GOOD_THRESHOLD=0.6
+TONE_FAIR_THRESHOLD=0.45
+
+## Subscription Plans
+PLANS:
+  FREE:
+    name: Free
+    price: 0
+    monthly_analyses: 30  # ~1 per day
+    features:
+      - basic_metrics
+      - 7_day_history
+  PRO:
+    name: Pro
+    price: 9.99
+    monthly_analyses: -1  # unlimited
+    features:
+      - all_metrics
+      - unlimited_history
+      - advanced_feedback
+      - export_reports
+  PRO_PLUS:
+    name: Pro Plus
+    price: 19.99
+    monthly_analyses: -1  # unlimited
+    features:
+      - all_pro_features
+      - ai_coaching
+      - video_tutorials
+      - priority_support
+      - batch_analysis
+
+## Languages Supported
+LANGUAGES:
+  - en: English
+  - zh: 中文 (Chinese)
+
+## Features Toggle
+ENABLE_FEATURES:
+  USER_REGISTRATION: true
+  AUDIO_UPLOAD: true
+  LIVE_RECORDING: true
+  ANALYSIS_HISTORY: true
+  PAYMENT_SYSTEM: false
+  EMAIL_VERIFICATION: false
+  SOCIAL_LOGIN: false
+  API_PUBLIC_ACCESS: false  # Require auth for all API
+
+## Email Configuration (Optional)
+EMAIL_ENABLED: false
+SMTP_SERVER: smtp.gmail.com
+SMTP_PORT: 587
+SENDER_EMAIL: noreply@vocalyzeai.com
+
+## Stripe Payment (Optional)
+STRIPE_ENABLED: false
+STRIPE_PUBLIC_KEY: pk_test_xxxx
+STRIPE_SECRET_KEY: sk_test_xxxx
+
+## Logging
+LOG_LEVEL: INFO
+LOG_FILE: backend/logs/app.log
+LOG_MAX_SIZE_MB: 10
+LOG_BACKUP_COUNT: 5
+
+## Performance
+CORS_ENABLED: true
+CACHE_ENABLED: false
+CACHE_TTL_SECONDS: 300
+RATE_LIMIT_ENABLED: false
+RATE_LIMIT_PER_MINUTE: 60
+
+## UI/UX
+THEME_COLOR: #6c5ce7
+SECONDARY_COLOR: #00b894
+ANIMATIONS_ENABLED: true
+DARK_MODE_ENABLED: false
+
+## Development
+DEBUG_MODE: true
+MOCK_AUDIO_ANALYSIS: false  # Use real analysis or mock
+SEED_DATABASE: false  # Auto-create test data

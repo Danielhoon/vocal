@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  frontend:
+    image: node:18-alpine
+    working_dir: /app/frontend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./frontend:/app/frontend
+    command: >
+      sh -c "npm install -g http-server &&
+             http-server -p 8000 -c-1"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - vocalyzeai-network
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - DATABASE_URL=sqlite:///vocalyzeai.db
+      - JWT_SECRET_KEY=dev-secret-key
+    command: python app.py
+    networks:
+      - vocalyzeai-network
+    depends_on:
+      - db
+
+  # Database Service (PostgreSQL - optional)
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: vocalyzeai
+      POSTGRES_USER: vocalyzeai
+      POSTGRES_PASSWORD: vocalyzeai_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - vocalyzeai-network
+
+volumes:
+  postgres_data:
+
+networks:
+  vocalyzeai-network:
+    driver: bridge
